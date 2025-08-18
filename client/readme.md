@@ -18,6 +18,8 @@ The sample demonstrates how to embed Reveal dashboards into your web application
 
 You should now see the Reveal view embedded in your page, and if you updated your data source / authentication details in the server, you can create / save dashboards.
 
+<img width="1899" height="877" alt="reveal-load-dashboard" src="https://github.com/user-attachments/assets/6d4a4e94-5fde-4ba2-b96e-ad04c4c4541e" />
+
 ---
 
 ## 📂 Key Sample Scenarios
