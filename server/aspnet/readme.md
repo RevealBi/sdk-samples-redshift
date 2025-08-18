@@ -1,27 +1,10 @@
-# What's in this GitHub Organization
+# Getting Started with Reveal SDK with ASP.NET Core
 
 You'll find everything you need to learn and implement a Reveal SDK application (both client and server) in this organization. This documents includes the general over of Reveal, links to source code for getting started samples, links to product documentation, support and video training.
 
-Server Examples:
-
-- Basic .NET Core / SQL Server with limited comments - [netcore-server-basic](https://github.com/RevealBi-SqlServer/netcore-server-basic)
-- Advanced / heavily commented .NET Core / SQL Server implementation - [netcore-server](https://github.com/RevealBi-SqlServer/netcore-server)
-- NodeJS TypeScript / SQL Server implementation - [node-ts](https://github.com/RevealBi-SqlServer/node-ts)
-
-
-Client Examples:
-
-- Using HTML - [html](https://github.com/RevealBi-SqlServer/html)
-- Using Angular - [angular-client](https://github.com/RevealBi-SqlServer/angular-client)
-- Using React - [react-client](https://github.com/RevealBi-SqlServer/react-client)
-
----
-
-# Reveal Overview & Important Notes for a PoC Kickoff
-
 ## Dependencies
 
-The essential dependencies for a .NET Core application using Reveal are the Reveal NuGet package and the SQL Server dependency.
+The essential dependencies for a .NET Core application using Reveal are the Reveal NuGet package and the Amazon Redshift dependency.
 
 ## Integrating Reveal
 
@@ -35,48 +18,115 @@ builder.Services.AddControllers().AddReveal(builder =>
         .AddDataSourceProvider<DataSourceProvider>()
         .AddUserContextProvider<UserContextProvider>()
         .AddObjectFilter<ObjectFilterProvider>()
-        .DataSources.RegisterMicrosoftSqlServer();
+        .DataSources.RegisterAmazonRedshift();
 });
 ```
-or in TypeScript / JavaScript in your app.ts / main.js:
-
-```typescript
-const revealOptions: RevealOptions = {
-	userContextProvider: userContextProvider,
-	authenticationProvider: authenticationProvider,
-	dataSourceProvider: dataSourceProvider,
-	dataSourceItemProvider: dataSourceItemProvider,
-	dataSourceItemFilter: dataSourceItemFilter,
-	dashboardProvider: dashboardProvider,
-	dashboardStorageProvider: dashboardStorageProvider
-}
-app.use('/', reveal(revealOptions));
-```
-
 
 In this setup:
 - **AddReveal Configuration**: Registers essential services like `AuthenticationProvider` and `DataSourceProvider`, while including optional configurations such as `UserContextProvider`, `ObjectFilterProvider`, and `DashboardProvider` as needed.
-- **Data Sources**: Registers the Microsoft SQL Server connector, which is necessary for SQL Server integrations in .NET Core.  For NodeJS, you are not required to install / register the SQL Server connector separately.
+- **Data Sources**: Registers the Amazon Redshift connector, which is necessary for Amazon Redshift integrations in .NET Core.  For NodeJS, you are not required to install / register the Amazon Redshift connector separately.
 
 ### Core Server Functions
 
 #### Authentication
 
-Authentication is handled by implementing the `IRVAuthenticationProvider`. A username and password credential are created, and the connection details are stored in the data source provider. The example utilizes an Azure SQL instance.
+Authentication is handled by implementing the `IRVAuthenticationProvider`. A username and password credential are created, and the connection details are stored in the data source provider. The example utilizes an Amazon Redshift instance.
 
 - **[Authentication](https://help.revealbi.io/web/authentication/)**: Detailed documentation on setting up authentication.
+
+```csharp
+public Task<IRVDataSourceCredential> ResolveCredentialsAsync(IRVUserContext userContext, RVDashboardDataSource dataSource)
+{
+	IRVDataSourceCredential userCredential = new RVIntegratedAuthenticationCredential();
+	if (dataSource is RVRedshiftDataSource)
+	{
+		userCredential = new RVUsernamePasswordDataSourceCredential((string)userContext.Properties["Username"], (string)userContext.Properties["Password"]);
+	}
+	return Task.FromResult(userCredential);
+}
+```
 
 #### Data Source Provider
 
 The `DataSourceProvider` specifies the location of the database, including host, database name, schema, and port. This information can be retrieved from various sources, such as app settings, Azure Key Vault, or configuration files. The example uses app settings to store these details.
 
-- **[Data Source / Data Source Items](https://help.revealbi.io/web/adding-data-sources/ms-sql-server/)**: Guidance on setting up and managing data sources.
+```csharp
+public Task<RVDashboardDataSource> ChangeDataSourceAsync(IRVUserContext userContext, RVDashboardDataSource dataSource)
+{
+	if (dataSource is **RVRedshiftDataSource** SqlDs)
+	{
+		SqlDs.Host = (string)userContext.Properties["Host"];
+		SqlDs.Database = (string)userContext.Properties["Database"];
+	}
+	return Task.FromResult(dataSource);
+}
+```
 
 #### Data Source Items
 
 Custom data source items can be created, such as parameterized queries and stored procedures. These items are defined in the `DataSourceProvider` and are made accessible to users through a dialog.
 
 - **[Custom Queries](https://help.revealbi.io/web/custom-queries/)**: Steps for adding custom queries to data sources.
+
+```csharp
+public Task<RVDataSourceItem>? ChangeDataSourceItemAsync(IRVUserContext userContext, string dashboardId, RVDataSourceItem dataSourceItem)
+{
+	// ****
+	// Every request for data passes thru changeDataSourceItem
+	// You can set query properties based on the incoming requests
+	// for example, you can check:
+	// - dsi.id
+	// - dsi.table
+	// - dsi.title
+	// and take a specific action on the dsi as this request is processed
+	// ****
+
+	if (dataSourceItem is not RVRedshiftDataSourceItem sqlDsi) return Task.FromResult(dataSourceItem);
+
+	// Ensure data source is updated
+	ChangeDataSourceAsync(userContext, sqlDsi.DataSource);
+
+	// Get the UserContext properties
+	string customerId = userContext.UserId;
+	string? orderId = userContext.Properties["OrderId"]?.ToString();
+	bool isAdmin = userContext.Properties["Role"]?.ToString() == "Admin";
+
+	// Get filterTables from userContext properties
+	var filterTables = userContext.Properties["FilterTables"] as string[] ?? Array.Empty<string>();
+
+	// Execute query based on the incoming client request
+	switch (sqlDsi.Id)
+	{
+		// Example of how to use a standard SQL statement with parameter
+		case "CustOrdersOrders":
+			sqlDsi.CustomQuery = $@"SELECT OrderID, OrderDate, RequiredDate, ShippedDate FROM Orders
+						WHERE CustomerID = '{customerId}' ORDER BY OrderID";
+			break;
+
+		// Example of an ad-hoc-query
+		case "CustomerOrders":
+			sqlDsi.CustomQuery = $"SELECT * FROM orders WHERE orderId = '{orderId}'";
+			break;
+
+		default:
+			// Check for general table access logic
+			if (filterTables.Contains(sqlDsi.Table))
+			{
+				if (isAdmin)
+				{
+					sqlDsi.CustomQuery = $"SELECT * FROM [{sqlDsi.Table}]";
+				}
+				else
+				{
+					sqlDsi.CustomQuery = $"SELECT * FROM [{sqlDsi.Table}] WHERE customerid = '{customerId}'";
+				}
+			}
+		break; 
+	}
+	return Task.FromResult(dataSourceItem);
+}
+}
+```
 
 ### Optional, but Important Server Functions
 
@@ -130,14 +180,13 @@ The dashboard title displayed to the user can differ from the underlying file na
 
 ## Video Training
 
-Explore these video resources to help you set up and configure Reveal BI for .NET and SQL Server:
+Explore these video resources to help you set up and configure Reveal BI Server.  This step-by-step is using Microsoft SQL Server, the difference will be data source type, for example, `RVRedshiftDataSource` vs. `RVSqlServerDataSource`.
 
 - [Setting Up a .NET Core Server with Reveal BI: Quick & Easy Guide](https://youtu.be/ZGxZhnr0aIw?si=qmtVXL_eJkTZ8oEq)
 - [Configuring SQL Server in a .NET Core Server in Reveal BI](https://youtu.be/oSQ13IikHn0?si=cizw6Hr_cqVWBDXz)
-- [Leveraging SQL Server Stored Procedures and Parameters in Reveal BI](https://youtu.be/Q2-TzTi7YJE?si=udnNCOf2fJCCDGqr)
 - [Configuring Row Level Security with UserContext in Reveal BI](https://youtu.be/dJttjCU-xC8?si=qyFDvuqtHR1HGIpf)
 
-For a comprehensive learning path, check out the **.NET & SQL Server Track Playlist**:  
+For a comprehensive learning path, check out the **ASP.NET Core Playlist**:  
 [https://youtube.com/playlist?list=PLprTqzVaLDG8TSd0nIwgmAkwIF0xkJRI7&si=-TvFdEN4vNzeFfRP](https://youtube.com/playlist?list=PLprTqzVaLDG8TSd0nIwgmAkwIF0xkJRI7&si=-TvFdEN4vNzeFfRP)
 
 ## Licensing
@@ -156,9 +205,3 @@ The following resources are available to help with the PoC:
 - **[JavaScript API](https://help.revealbi.io/api/javascript/latest/)**: Reveal offers a comprehensive JavaScript API that allows customization of almost every aspect of the dashboard, including visualization chooser, editing modes, and adding custom elements.
 - **[Developer Playground](https://help.revealbi.io/playground/)**: An interactive playground to experiment with Reveal BI's features.
 - **[Add Feature Requests, Bug Reports, or Review Open Issues](https://github.com/RevealBi/Reveal.Sdk/issues)**: Reveal's GitHub repository where you can review, add, or comment on new or existing issues.
-
-## PoC Requirements
-
-### Check-in Calls
-
-Weekly check-in calls lasting 10-15 minutes will be scheduled to provide updates and address any challenges during the PoC.
