@@ -8,11 +8,7 @@ The sample demonstrates how to embed Reveal dashboards into your web application
 
 ## 🚀 Getting Started
 
-1. Clone this repository:
-```bash
-   git clone <your-repo-url>
-```
-
+1. Clone or download the [sdk-samples-redshift](https://github.com/RevealBi/sdk-samples-redshift) repository and run one of the servers: [ASP.NET](https://github.com/RevealBi/sdk-samples-redshift/tree/main/server/aspnet), [Java](https://github.com/RevealBi/sdk-samples-redshift/tree/main/server/java), [NodeJS](https://github.com/RevealBi/sdk-samples-redshift/tree/main/server/node-js), or [NodeTS](https://github.com/RevealBi/sdk-samples-redshift/tree/main/server/node-ts).
 2. Open `index.html` in your browser (or run with a local web server).
 3. Update the base URL in `index.html` to point to your Reveal server:
 
@@ -20,7 +16,7 @@ The sample demonstrates how to embed Reveal dashboards into your web application
    $.ig.RevealSdkSettings.setBaseUrl("http://localhost:5111/");
    ```
 
-You should now see the Reveal view embedded in your page.
+You should now see the Reveal view embedded in your page, and if you updated your data source / authentication details in the server, you can create / save dashboards.
 
 ---
 
