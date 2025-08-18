@@ -1,4 +1,4 @@
-# What's in this GitHub Organization
+# Getting Started with Amazon Redshift & Reveal
 
 You'll find everything you need to get started with the Reveal SDK application (both client and server) and Amazon Redshift. This documents includes the general over of Reveal, links to source code for getting started samples, links to product documentation, support and video training.
 
