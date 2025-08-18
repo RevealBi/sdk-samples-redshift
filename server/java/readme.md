@@ -4,7 +4,7 @@ You'll find everything you need to learn and implement a Reveal SDK server in th
 
 ## Dependencies
 
-The essential dependencies for a Java application is the Reveal SDK depenency:
+The essential dependencies for a Java application is the Reveal SDK depenency (be sure to use the latest [version](https://help.revealbi.io/web/release-notes/):
 
 ```xml
 <groupId>com.server</groupId>
