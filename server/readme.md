@@ -1,4 +1,4 @@
-# Reveal SDK - Getting Started with HTML Clients
+# Reveal SDK - Getting Started with Reveal SDK Server Platforms
 
 This repository provides getting started samples connected to an **Amazon Redshift** database using the [Reveal SDK](https://www.revealbi.io/).  
 
@@ -110,3 +110,4 @@ server.port=5111
 * Experiment with connecting to different data sources.
 * Try creating and saving your own dashboards.
 * Explore the [Reveal SDK Samples](https://github.com/RevealBi) for more advanced scenarios.
+
