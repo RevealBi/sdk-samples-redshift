@@ -74,6 +74,19 @@ public IRVDataSourceCredential resolveCredentials(IRVUserContext userContext, RV
 
 The `DataSourceProvider` specifies the location of the database, including host, database name, schema, and port. This information can be retrieved from various sources, such as app settings, Azure Key Vault, or configuration files. The example uses app settings to store these details.
 
+Look for the application.settings to update these properties to connect to your database:
+
+```ini
+# Redshift Configuration
+REDSHIFT_HOST=
+REDSHIFT_DATABASE=
+REDSHIFT_USERNAME=
+REDSHIFT_PASSWORD=
+REDSHIFT_SCHEMA=
+```
+
+Once you've updated the config, you can connect to your database.
+
 ```java
 public RVDashboardDataSource changeDataSource(IRVUserContext userContext, RVDashboardDataSource dataSource) {
     if (dataSource instanceof RVRedshiftDataSource) {
@@ -224,14 +237,9 @@ The dashboard title displayed to the user can differ from the underlying file na
 
 ## Video Training
 
-Explore these video resources to help you set up and configure Reveal BI Server.  This step-by-step is using Microsoft SQL Server, the difference will be data source type, for example, `RVRedshiftDataSource` vs. `RVSqlServerDataSource`.
+Explore these video resources to help you set up and configure Reveal BI Server.  This step-by-step is using Databricks, the difference will be data source type, for example, `RVRedshiftDataSource` vs. `RVDatabricksDataSource`.
 
-- [Setting Up a .NET Core Server with Reveal BI: Quick & Easy Guide](https://youtu.be/ZGxZhnr0aIw?si=qmtVXL_eJkTZ8oEq)
-- [Configuring SQL Server in a .NET Core Server in Reveal BI](https://youtu.be/oSQ13IikHn0?si=cizw6Hr_cqVWBDXz)
-- [Configuring Row Level Security with UserContext in Reveal BI](https://youtu.be/dJttjCU-xC8?si=qyFDvuqtHR1HGIpf)
-
-For a comprehensive learning path, check out the **ASP.NET Core Playlist**:  
-[https://youtube.com/playlist?list=PLprTqzVaLDG8TSd0nIwgmAkwIF0xkJRI7&si=-TvFdEN4vNzeFfRP](https://youtube.com/playlist?list=PLprTqzVaLDG8TSd0nIwgmAkwIF0xkJRI7&si=-TvFdEN4vNzeFfRP)
+- [Overview of a Java Spring Boot Server](https://youtu.be/lSKaXMfqCXI)
 
 ## Licensing
 
