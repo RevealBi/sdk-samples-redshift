@@ -191,13 +191,13 @@ public RVDataSourceItem changeDataSourceItem(IRVUserContext userContext, String 
 
 The `ObjectFilter` controls the data access permissions for users. It has a `Filter` function that can be customized to restrict data visibility based on user roles or other criteria. The example demonstrates a scenario where users with the "user" role can only access "All Orders" and "Invoices" data.
 
-- **[Object Filter](https://github.com/RevealBi/sdk-samples-javascript/tree/main/FilteringDataObjects)**: Examples of filtering data objects.
+- **[Object Filter](https://github.com/RevealBi/sdk-samples-redshift/blob/main/server/java/src/main/java/com/server/reveal/ObjectFilter.java)**: Examples of filtering data objects.
 
 #### User Context
 
 The `UserContext` provides information about the logged-in user. It can be used to store default properties like `UserID` or other custom properties defined in the `UserContextProvider`. The `GetUserContext` method is used to retrieve the user context.
 
-- **[User Context](https://help.revealbi.io/web/user-context/)**: Explanation of how to utilize the user context.
+- **[User Context](https://github.com/RevealBi/sdk-samples-redshift/blob/main/server/java/src/main/java/com/server/reveal/UserContextProvider.java)**: Explanation of how to utilize the user context.
 
 #### Dashboard Provider
 
