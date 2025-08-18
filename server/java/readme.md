@@ -1,4 +1,4 @@
-# Getting Started with Reveal SDK with Java
+# Getting Started with Reveal SDK using Java
 
 You'll find everything you need to learn and implement a Reveal SDK server in this repository. This documents includes the general over of Reveal, links to source code for getting started samples, links to product documentation, support and video training.
 
