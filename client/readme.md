@@ -1,4 +1,4 @@
-# Reveal SDK - Getting Started with HTML
+# Reveal SDK - Getting Started with HTML Clients
 
 This repository provides a simple example of how to get started with the [Reveal SDK](https://www.revealbi.io/) using plain HTML and JavaScript.  
 
