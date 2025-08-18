@@ -45,9 +45,7 @@ You should now see the Reveal view embedded in your page, and if you updated you
 
 ## 🛠️ Requirements
 
-* A running instance of the **Reveal Server** (see Reveal docs for setup)
-* Browser that supports ES6 and modern JavaScript
-* Local server (optional, but recommended for testing)
+1. Clone or download the repository and run one of the server samples. [sdk-samples-redshift](https://github.com/RevealBi/sdk-samples-redshift) repository and run one of the servers: [ASP.NET](https://github.com/RevealBi/sdk-samples-redshift/tree/main/server/aspnet), [Java](https://github.com/RevealBi/sdk-samples-redshift/tree/main/server/java), [NodeJS](https://github.com/RevealBi/sdk-samples-redshift/tree/main/server/node-js), or [NodeTS](https://github.com/RevealBi/sdk-samples-redshift/tree/main/server/node-ts).
 
 ---
 
