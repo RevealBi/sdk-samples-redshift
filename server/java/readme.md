@@ -207,15 +207,28 @@ The `DashboardProvider` enables customization of dashboard saving behavior. It c
 
 ### HTML Client Setup
 
-The HTML client requires three dependencies: jQuery, JS, and the Reveal JavaScript library. These can be accessed locally or through a CDN. The client code specifies the server URL and a callback function that handles user interaction.
+The [HTML client](https://github.com/RevealBi/sdk-samples-redshift/blob/main/client/index-dsi.html) requires three dependencies: jQuery, JS, and the Reveal JavaScript library. These can be accessed locally or through a CDN. The client code specifies the server URL and a callback function that handles user interaction.
 
 ### Loading Dashboards
 
 Dashboards are loaded using the `LoadDashboard` function, which takes the name of the dashboard file as a parameter. In HTML clients, a selector is used to specify where the dashboard should be rendered.
 
+```javascript
+$.ig.RVDashboard.loadDashboard("Marketing").then(dashboard => {            
+    var revealView = new $.ig.RevealView("#revealView");
+    revealView.dashboard = dashboard;
+});
+```
+
 ### Additional Headers Provider
 
 The `SetAdditionalHeadersProvider` API allows passing custom headers to the server. These headers can contain information like customer ID or other relevant details.
+
+```javascript
+$.ig.RevealSdkSettings.setAdditionalHeadersProvider(function (url) {
+    return headers;
+});
+```
 
 - **[SetAdditionalHeadersProvider](https://help.revealbi.io/web/user-context/)**: Documentation on using this API for custom headers.
 
