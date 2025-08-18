@@ -2,7 +2,7 @@
 
 This repository provides a simple example of how to get started with the [Reveal SDK](https://www.revealbi.io/) using plain HTML and JavaScript.  
 
-The sample demonstrates how to embed Reveal dashboards into your web application and connect to **Amazon Redshift**.
+The sample demonstrates how connect to a Reveal embedded SDK server connected to an **Amazon Redshift** database.
 
 ---
 
