@@ -159,7 +159,3 @@ $.ig.RevealSdkSettings.setAdditionalHeadersProvider(function (url) {
 ## Licensing
 
 A trial license key is valid for 30 days. Set the license key in the `revealOptions.settings` or as an environment variable.
-
----
-
-For more details, see the `reveal.ts` file in this project for implementation specifics.
