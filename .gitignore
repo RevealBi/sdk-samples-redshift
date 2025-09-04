@@ -76,6 +76,8 @@ dist
 !.env.example
 application.properties
 !application.properties.example
+appsettings.json
+!appsettings.Development.json
 
 # ----------------------------
 # Maven / Java
