@@ -75,7 +75,7 @@ const userContextProvider = (request: IncomingMessage): RVUserContext => {
 
   // Set userId and orderId in properties
   props.set("userId", userId);
-  props.set("OrderId", orderId || "");
+  props.set("orderId", orderId || "");
   
   // Default to User role
   let role = "User";
@@ -140,7 +140,7 @@ const dataSourceItemProvider = async (userContext: IRVUserContext | null, dataSo
 
         // Get the UserContext properties
         const customerId = userContext?.userId;
-        const orderId = userContext?.properties.get("OrderId");
+        const orderId = userContext?.properties.get("orderId");
         const isAdmin = userContext?.properties.get("Role") === "Admin";
         const filterTables = userContext?.properties.get("FilterTables") as string[] || [];
 

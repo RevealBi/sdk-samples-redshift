@@ -39,7 +39,7 @@
     <div id="revealView"></div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
-    <script src="https://dl.revealbi.io/reveal/libs/1.7.6/infragistics.reveal.js"></script>
+    <script src="https://dl.revealbi.io/reveal/libs/1.8.0/infragistics.reveal.js"></script>
 
     <script type="text/javascript">
         $.ig.RevealSdkSettings.setBaseUrl("http://localhost:5111/");     
@@ -54,6 +54,7 @@
         var revealView = new $.ig.RevealView("#revealView");
         revealView.interactiveFilteringEnabled = true;
         revealView.startInEditMode = true;    
+        
         revealView.onDataSourcesRequested = (callback) => {
             // Set values to pass to server
             var selectedUserId = $('#userId').val();

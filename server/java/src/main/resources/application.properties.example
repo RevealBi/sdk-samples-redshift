@@ -1,0 +1,11 @@
+# Redshift Configuration
+REDSHIFT_HOST=
+REDSHIFT_DATABASE=
+REDSHIFT_USERNAME=
+REDSHIFT_PASSWORD=
+REDSHIFT_SCHEMA=
+
+# Server Configuration
+server.port=5111
+
+spring.web.resources.static-locations=classpath:/static/images/

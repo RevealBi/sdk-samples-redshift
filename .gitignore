@@ -74,6 +74,8 @@ dist
 .env
 .env.*
 !.env.example
+application.properties
+!application.properties.example
 
 # ----------------------------
 # Maven / Java
@@ -138,3 +140,6 @@ _Dependencies/
 # Rider / JetBrains
 .idea/
 *.iml
+server/node-js/.env
+server/node-ts/.env
+server/java/src/main/resources/application.properties
