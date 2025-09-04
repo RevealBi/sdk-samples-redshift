@@ -54,11 +54,11 @@ namespace RevealSdk.Server.Reveal
             var props = new Dictionary<string, object>() {
                 { "OrderId", orderId ?? string.Empty },
                 { "Role", role },
-                { "Host", _sqlOptions.Host },
-                { "Database", _sqlOptions.Database },
-                { "Username", _sqlOptions.Username },
-                { "Password", _sqlOptions.Password },
-                { "Schema", _sqlOptions.Schema },
+                { "REDSHIFT_HOST", _sqlOptions.REDSHIFT_HOST },
+                { "REDSHIFT_DATABASE", _sqlOptions.REDSHIFT_DATABASE },
+                { "REDSHIFT_USERNAME", _sqlOptions.REDSHIFT_USERNAME },
+                { "REDSHIFT_PASSWORD", _sqlOptions.REDSHIFT_PASSWORD },
+                { "REDSHIFT_SCHEMA", _sqlOptions.REDSHIFT_SCHEMA },
                 { "FilterTables", filterTables }
             };
 

@@ -28,8 +28,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Reveal.Sdk.AspNetCore" Version="1.7.6" />
-    <PackageReference Include="Reveal.Sdk.Data.Amazon.Redshift" Version="1.7.6" />
+    <PackageReference Include="Reveal.Sdk.AspNetCore" Version="1.8.0" />
+    <PackageReference Include="Reveal.Sdk.Data.Amazon.Redshift" Version="1.8.0" />
     <PackageReference Include="Reveal.Sdk.Dom" Version="0.1.656-beta" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>

@@ -2,11 +2,11 @@
 {
     public class redshiftOptions
     {
-        public string Host { get; set; } = "";
-        public string Database { get; set; } = "";
-        public string Username { get; set; } = "";
-        public string Password { get; set; } = "";
-        public string Schema { get; set; } = "";
+    public string REDSHIFT_HOST { get; set; } = "";
+    public string REDSHIFT_DATABASE { get; set; } = "";
+    public string REDSHIFT_USERNAME { get; set; } = "";
+    public string REDSHIFT_PASSWORD { get; set; } = "";
+    public string REDSHIFT_SCHEMA { get; set; } = "";
 
     }
 
