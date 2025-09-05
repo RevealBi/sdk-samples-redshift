@@ -19,7 +19,7 @@ builder.Services.AddControllers().AddReveal( builder =>
 });
 
 builder.Services.Configure<redshiftOptions>(
-    builder.Configuration.GetSection("Server"));
+    builder.Configuration.GetSection("Redshift"));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -32,9 +32,6 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
-
-app.UseDefaultFiles();
-app.UseStaticFiles(); 
 
 if (app.Environment.IsDevelopment())
 {
